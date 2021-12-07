@@ -1,11 +1,15 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const path = require("path");
 
 const employee = require("./lib/Employee");
 const engineer = require("./lib/Engineer");
 const intern = require("./lib/Intern");
 const manager = require("./lib/Manager");
 
+const currentTeam = [];
+
+// Step 1.
 const managerPrompt = [
   {
     type: "input",
@@ -29,12 +33,13 @@ const managerPrompt = [
   },
 ];
 
+//step 2.
 const addMembers = [
   {
     type: "list",
     message: "Would you like too...",
     name: "teamMembers",
-    options: [
+    choices: [
       "Add an engineer.",
       "Add an intern.",
       "Or finish building my Team!",
@@ -42,11 +47,11 @@ const addMembers = [
   },
 ];
 
-const engineerPrompt = [{}];
+// const engineerPrompt = [{}];
 
-const internPrompt = [{}];
+// const internPrompt = [{}];
 
-function buildTeam();
+// function buildTeam();
 //Step 1
 //Prompt to enter the team MANAGER's name, employee ID, email address, and office number
 //use inquirer npm to prompt questions
@@ -56,17 +61,16 @@ function buildTeam();
 //     err ? console.log(err) : console.log("Writing ReadMe!")
 //   );
 // }
-
+// Inquirer Prompt
 function init() {
   inquirer
     .prompt(managerPrompt)
-    .then((data) => {
+    .then((managerData) => {
       //   console.log(managerPrompt(data));
       //   var managerData = managerPrompt(data);
       //   writeToFile("readme.md", rawMarkdown);
-      console.log(data);
+      console.log(managerData);
     })
-    // .then(buildTeam())
     .catch((error) => {
       if (error.isTtyError) {
         console.log("Prompt couldn't be rendered in the current environment");
@@ -74,9 +78,14 @@ function init() {
         console.log("Something else went wrong");
       }
     });
+  //   inquirer.prompt(addMembers).then((membersData) => {
+  //     console.log(membersData);
+  //   });
 }
 
 init();
+
+// console.log(addMembers);
 
 //.then(
 //Call the function in step 2
