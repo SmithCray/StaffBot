@@ -2,10 +2,10 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require("path");
 
-const employee = require("./lib/Employee");
-const engineer = require("./lib/Engineer");
-const intern = require("./lib/Intern");
-const manager = require("./lib/Manager");
+const Employee = require("./lib/Employee");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const Manager = require("./lib/Manager");
 
 const currentTeam = [];
 
@@ -51,7 +51,24 @@ const addMembers = [
 
 // const internPrompt = [{}];
 
-// function buildTeam();
+function buildTeam() {
+  console.log(currentTeam);
+}
+
+function startBuilding() {
+  inquirer
+    .prompt(addMembers)
+    .then((membersData) => {
+      console.log(membersData);
+    })
+    .catch((error) => {
+      if (error.isTtyError) {
+        console.log("Prompt couldn't be rendered in the current environment");
+      } else {
+        console.log("Something else went wrong");
+      }
+    });
+}
 //Step 1
 //Prompt to enter the team MANAGER's name, employee ID, email address, and office number
 //use inquirer npm to prompt questions
@@ -62,6 +79,7 @@ const addMembers = [
 //   );
 // }
 // Inquirer Prompt
+
 function init() {
   inquirer
     .prompt(managerPrompt)
@@ -70,6 +88,20 @@ function init() {
       //   var managerData = managerPrompt(data);
       //   writeToFile("readme.md", rawMarkdown);
       console.log(managerData);
+
+      const manager = new Manager(
+        managerData.managerName,
+        managerData.managerID,
+        managerData.managerEmail,
+        managerData.managerOffice
+      );
+
+      currentTeam.push(manager);
+      console.log(currentTeam[0].getRole());
+      console.log(currentTeam[0].getName());
+      console.log(currentTeam[0].getOfficeNumber());
+
+      startBuilding();
     })
     .catch((error) => {
       if (error.isTtyError) {
@@ -78,14 +110,9 @@ function init() {
         console.log("Something else went wrong");
       }
     });
-  //   inquirer.prompt(addMembers).then((membersData) => {
-  //     console.log(membersData);
-  //   });
 }
 
 init();
-
-// console.log(addMembers);
 
 //.then(
 //Call the function in step 2
